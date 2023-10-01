@@ -36,7 +36,7 @@ def init_wordle(driver):
     # Locate the play button and click it text "Play"
     driver.find_element(By.XPATH,"//button[text()='Play']").click()
 
-    # See if the how to play message appears
+    # See if the 'how to play' message appears
     if element_exists(driver, 
                         "//h2[contains(@class,\"Modal-module_heading\") and text()=\"How To Play\"]",
                     30):
@@ -45,7 +45,7 @@ def init_wordle(driver):
         time.sleep(0.25)
         if element_exists(driver, 
                         "//h2[contains(@class,\"Modal-module_heading\") and text()=\"How To Play\"]",
-                    5):
+                    2):
             raise Exception("Could not close the how to play tutorial")
         print("Closed successfully the how to play tutorial.")
     
@@ -65,7 +65,7 @@ def init_wordle(driver):
 
 
 def attempt_word(driver, word):
-    # send word keys and enter to the game
+    # send word keys and enter to the game page
     app_container_element = driver.find_element(By.XPATH, 
                         "/html")
     app_container_element.send_keys(word)

@@ -6,7 +6,7 @@ import ctypes
 
 def element_exists(driver, xpath, timeout=10):
     try:
-        element = WebDriverWait(driver, timeout).until(
+        WebDriverWait(driver, timeout).until(
         EC.presence_of_element_located((By.XPATH, xpath)
                                        )
         )

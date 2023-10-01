@@ -6,4 +6,4 @@ config = read_configurations()
 init_wordle(driver)
 attempt_word(driver, config['firstWordTry'])
 
-message_box("Success", "Wordle game was initialized successfully.")
+message_box("Message box", "Finished code")
