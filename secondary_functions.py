@@ -3,16 +3,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import ctypes
+import time
 
-def element_exists(driver, xpath, timeout=10):
+def element_exists(driver, xpath, timeout=None):
+    if timeout:
+         old_implicitly_wait = driver.timeouts.implicit_wait
+         driver.implicitly_wait(timeout)
     try:
-        WebDriverWait(driver, timeout).until(
-        EC.presence_of_element_located((By.XPATH, xpath)
-                                       )
-        )
-        return True
+        element = driver.find_element(By.XPATH, xpath)
+        # if found element, return true
+        if element:
+            driver.implicitly_wait(old_implicitly_wait)
+            return True
     except:
-        return False
+            driver.implicitly_wait(old_implicitly_wait)
+            return False
+    
     
 
 def message_box(title, text):
