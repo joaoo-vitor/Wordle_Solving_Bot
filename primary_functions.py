@@ -3,6 +3,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from secondary_functions import *
+import json
+import time
+
+# read config file
+def read_configurations(config_file_path = 'Config.json'):
+    print('Reading config file...')
+    f = open(config_file_path)
+    return json.load(f)
+
+    
 
 def init_wordle(driver):
     # Open the Wordle game URL
@@ -32,9 +42,10 @@ def init_wordle(driver):
                     30):
         print("The how to play tutorial appeared, accepting it...")
         driver.find_element(By.XPATH, "/html").send_keys(Keys.ESCAPE)
+        time.sleep(0.25)
         if element_exists(driver, 
                         "//h2[contains(@class,\"Modal-module_heading\") and text()=\"How To Play\"]",
-                    30):
+                    5):
             raise Exception("Could not close the how to play tutorial")
         print("Closed successfully the how to play tutorial.")
     
@@ -51,9 +62,11 @@ def init_wordle(driver):
 
     print("Wordle game was initialized successfully.")
 
-    message_box("Success", "Wordle game was initialized successfully.")
 
 
-
-# def first_attempt(driver):
-#     driver.attach
+def attempt_word(driver, word):
+    # send word keys and enter to the game
+    app_container_element = driver.find_element(By.XPATH, 
+                        "/html")
+    app_container_element.send_keys(word)
+    app_container_element.send_keys(Keys.ENTER)

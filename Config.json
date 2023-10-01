@@ -1,0 +1,9 @@
+{
+    "retriesAndTimeouts":{
+        "defaultTimeout":10,
+        "lowTimeout":5,
+        "highTimeout":30
+    },
+    "firstWordTry":"merry"
+
+}
