@@ -22,13 +22,13 @@ def init_wordle(driver):
     driver.implicitly_wait(10)  # Wait for up to 10 seconds
 
     # See if "We've updated our terms" message appears
-    if element_exists(driver, "//p[@class='purr-blocker-card__heading']", 5):
+    if element_exists(driver, "//p[@class='purr-blocker-card__heading']", 2):
         print("The \"We've updated our terms\" message has appeared, closing it...")
         driver.find_element(By.XPATH, "//button[@class='purr-blocker-card__button']").click()
         print("Clicked successfully on the terms 'Continue' button.")
 
     # See if the cookies message appears
-    if element_exists(driver, "//h3[@class='banner-title' and text()='Your tracker settings']", 30):
+    if element_exists(driver, "//h3[@class='banner-title' and text()='Your tracker settings']", 2):
         print("The cookies pop message has appeared, accepting on it...")
         driver.find_element(By.XPATH, "//button[@id='pz-gdpr-btn-accept']").click()
         print("Clicked successfully on the cookies 'Accept' button.")
@@ -70,3 +70,30 @@ def attempt_word(driver, word):
                         "/html")
     app_container_element.send_keys(word)
     app_container_element.send_keys(Keys.ENTER)
+
+    # if the wrong doesn't belong to the game, return false
+    # (warn Not in the word list)
+    if element_exists(driver, 
+                      "//div[@class='Toast-module_toast__iiVsN' and contains(text(),'word list')]",
+                       2):
+        return False
+    
+
+def read_word_colors(driver, index, config):
+    # given the word index, get the classification of the letters
+    classification_list = []
+    for i  in range(1,6):
+        classification_list.append(
+            # the letter is found by the aria label of a parent element
+            # which corresponds to the row (should be 'Row 1', for instance)
+            # and its own aria label attribute (it should contain 1st letter, 
+            # for instance)
+            driver.find_element(By.XPATH,
+                                f"//div[@aria-label='Row {index}']/div/"
+                                    "div[@class='Tile-module_tile__UWEHN'"
+                                         "and contains(@aria-label,'"
+                                            f"{config['ordinalNumbers'][str(i)]} letter')]")\
+                                                .get_attribute(config['attributes']['wordClass'])
+        )
+    return classification_list
+

@@ -4,5 +4,20 @@
         "lowTimeout":5,
         "highTimeout":30
     },
-    "firstWordTry":"merry"
+    "firstWordTry":"roads",
+    "lettersStates":{
+        "wrong":"absent",
+        "almost":"present",
+        "right":"correct"
+    },
+    "attributes":{
+        "wordClass":"data-state"
+    },
+    "ordinalNumbers":{
+        "1":"1st",
+        "2":"2nd",
+        "3":"3rd",
+        "4":"4th",
+        "5":"5th"
+    }
 }
