@@ -4,7 +4,7 @@
         "lowTimeout":5,
         "highTimeout":30
     },
-    "firstWordTry":"roads",
+    "firstWordTry":"marry",
     "lettersStates":{
         "wrong":"absent",
         "almost":"present",

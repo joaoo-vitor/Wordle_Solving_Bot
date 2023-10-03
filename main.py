@@ -48,7 +48,7 @@ for i in range(5):
         if not(current_word[i] in yellow_letters):
             wrong_letters+=current_word[i]
     else:
-        raise Exception("The data-state of the letter wasn't one of the three expected values.")
+        raise Exception("The 'data-state' attribute of the letter wasn't one of the three expected values.")
 
 # update the regex expressions for the letters that weren't found
 # if there was one try, say "roads", and only the "r" is yellow and all
@@ -56,7 +56,7 @@ for i in range(5):
 # ['[^oadsr]', '[^oads]', '[^oads]', '[^oads]', '[^oads]']
 for i in range(5):
     # if the current position query isn't just a letter (green letter)
-    if not(len(list_letter_queries[i])==5):
+    if not(len(list_letter_queries[i])==1):
         list_letter_queries[i] = f"[^{str(wrong_letters)}{not_possible_letters[i]}]"
 
 print(list_letter_queries)
