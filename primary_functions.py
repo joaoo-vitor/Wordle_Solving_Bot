@@ -6,6 +6,7 @@ from secondary_functions import *
 import json
 import time
 
+
 # read config file
 def read_configurations(config_file_path = 'Config.json'):
     print('Reading config file...')
