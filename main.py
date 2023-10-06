@@ -92,5 +92,9 @@ while True:
     current_word = word_database.get_most_relevant_word()
 
     # attempt current word of the try
-    attempt_word(current_word)
+    # if the attempt return false (wasn't accepted), remove it and try again
+    while not(attempt_word(current_word)):
+        word_database.remove_fist_word()
+        current_word = word_database.get_most_relevant_word()
+
     try_index+=1

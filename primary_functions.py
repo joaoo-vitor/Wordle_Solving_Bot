@@ -35,7 +35,8 @@ def init_wordle(driver):
         print("Clicked successfully on the cookies 'Accept' button.")
 
     # Locate the play button and click it text "Play"
-    driver.find_element(By.XPATH,"//button[text()='Play']").click()
+    time.sleep(5)
+    driver.find_element(By.XPATH,"//button[text()='Play']")
 
     # See if the 'how to play' message appears
     if element_exists(driver, 
