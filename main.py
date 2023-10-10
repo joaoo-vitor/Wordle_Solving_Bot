@@ -2,7 +2,7 @@ from primary_functions import *
 from database import *
 
 # Initialize variables
-try_index = 1
+try_index = 0
 count_greens = 0
 wrong_letters = ''
 yellow_letters = ''
@@ -93,7 +93,8 @@ while True:
 
     # attempt current word of the try
     # if the attempt return false (wasn't accepted), remove it and try again
-    while not(attempt_word(current_word)):
+    while not(attempt_word(driver, current_word)):
+        erase_attempt(driver)
         word_database.remove_fist_word()
         current_word = word_database.get_most_relevant_word()
 

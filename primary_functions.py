@@ -35,19 +35,18 @@ def init_wordle(driver):
         print("Clicked successfully on the cookies 'Accept' button.")
 
     # Locate the play button and click it text "Play"
-    time.sleep(5)
-    driver.find_element(By.XPATH,"//button[text()='Play']")
+    driver.find_element(By.XPATH,"//button[text()='Play']").click()
 
     # See if the 'how to play' message appears
     if element_exists(driver, 
                         "//h2[contains(@class,\"Modal-module_heading\") and text()=\"How To Play\"]",
-                    30):
+                    5):
         print("The how to play tutorial appeared, accepting it...")
-        driver.find_element(By.XPATH, "/html").send_keys(Keys.ESCAPE)
-        time.sleep(0.25)
+        ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+        time.sleep(1)
         if element_exists(driver, 
                         "//h2[contains(@class,\"Modal-module_heading\") and text()=\"How To Play\"]",
-                    2):
+                    5):
             raise Exception("Could not close the how to play tutorial")
         print("Closed successfully the how to play tutorial.")
     
@@ -79,6 +78,14 @@ def attempt_word(driver, word):
                       "//div[@class='Toast-module_toast__iiVsN' and contains(text(),'word list')]",
                        2):
         return False
+    return True
+
+
+def erase_attempt(driver):
+    # send backscape 5 times
+    for i in range(5):
+        ActionChains(driver).send_keys(Keys.BACK_SPACE).perform()
+
     
 
 def read_word_colors(driver, index, config):
