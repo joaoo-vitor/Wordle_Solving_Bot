@@ -56,3 +56,4 @@ df_words_rank['Rank'] = list_rank
 df_words_rank['Rank'] = df_words_rank['Rank'].astype('int64')
 
 df_words_rank.sort_values(by=['Rank'],ascending=False, inplace=True)
+df_words_rank.to_excel(r'File_name.xlsx', index=False)
