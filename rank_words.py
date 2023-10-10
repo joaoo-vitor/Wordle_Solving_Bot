@@ -19,15 +19,21 @@ if not(os.path.exists(file_path)):
     raise Exception("Could not find the file given to rank and sort words.")
 
 # creating a pdf file object
-pdfFileObj = open(file_path, 'rb')
+fileObj = open(file_path, 'rb')
  
-# creating a pdf reader object
-pdfReader = PyPDF2.PdfReader(pdfFileObj)
-input_text = ''
+if fileObj.name.endswith(".pdf"):
+    # creating a pdf reader object
+    pdfReader = PyPDF2.PdfReader(fileObj)
+    input_text = ''
 
-for i in range(len(pdfReader.pages)):
-    page = pdfReader.pages[i]
-    input_text+= page.extract_text()
+    for i in range(len(pdfReader.pages)):
+        page = pdfReader.pages[i]
+        input_text+= page.extract_text()
+elif fileObj.name.endswith(".txt"):
+    input_text = str(fileObj.read())
+else:
+    raise Exception("The file termination wasn't on the list.")
+
 
 # create one-column data frame all words form .txt database
 wd = WordDatabase()
@@ -37,14 +43,16 @@ df_words_rank = pd.DataFrame(
         "Word": wd.word_database
     }
 )
-# dict_words_rank = {}
-# for word in wd.word_database:
-#     dict_words_rank[word]=len(re.findall(f'(?:(?<=[. -,])|(?<=^)){word}(?:(?=[, .-])|(?=$))',
-#                                   input_text, re.IGNORECASE))
 
 # Creates new column for each word to all occurrences on the input string
-ranking_data\To Kill A Mockingbird - Full Text PDF.pdf
+list_rank = []
+for index, row in df_words_rank.iterrows():
+    list_rank.append(len(re.findall(f'(?:(?<=[. -,])|(?<=^)){row.Word}(?:(?=[, .-])|(?=$))',
+                                 input_text, re.IGNORECASE)))
+    pct = 100*index/len(df_words_rank)
+    print(f'Analyzing file... {pct:.2f}% ', end='\r')
+
+df_words_rank['Rank'] = list_rank
 df_words_rank['Rank'] = df_words_rank['Rank'].astype('int64')
 
-df_words_rank.sort_values(by=['Rank'])
-print(df_words_rank)
+df_words_rank.sort_values(by=['Rank'],ascending=False, inplace=True)
