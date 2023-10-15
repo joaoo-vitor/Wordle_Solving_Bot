@@ -12,7 +12,7 @@ class WordDatabase:
 
     def update_database_by_query(self, query):
         # add space the the end of the query to consider the separation of words
-        query+='\n'
+        query+='(?=\n)'
 
         # make query and update list of words
         words_before = len(self.word_database)

@@ -38,11 +38,17 @@ while True:
     # read the classifications of the word
     list_classifications = read_word_colors(driver,try_index, config)
 
+    # reset the greens counter (to check if won)
+    count_greens=0
+
     # to each word, populate list with the informations
     for i in range(5):
         if list_classifications[i] == config['lettersStates']['right']:
             # the right (green) letter is used for the query
             list_letter_queries[i] = current_word[i]
+            
+            # count on the green letters counter
+            count_greens+=1
         elif list_classifications[i] == config['lettersStates']['almost']:
             # if the word was found previously as a wrong letter,
             # but now was found as a present letter, remove it from
@@ -63,10 +69,9 @@ while True:
             raise Exception("The 'data-state' attribute of the letter wasn't one of the three expected values.")
 
     # sees if the game still on (if it does, then it updates the word)
-
     # if  won game, end code
     if count_greens==5:
-        message_box("Message box", "Won  game!")
+        message_box("Message box", "Won game!")
         break
 
     # if lost game, end code
@@ -82,9 +87,7 @@ while True:
         # if the current position isn't a green letter
         if not(list_classifications[i]==config['lettersStates']['right']):
             list_letter_queries[i] = f"[^{str(wrong_letters)}{not_possible_letters[i]}]"
-        else:
-            count_greens+=1
-        
+
     print(f"The query for the word after the {config['ordinalNumbers'][str(try_index)]} try is: {list_letter_queries}")
 
     # filter the words inside the database

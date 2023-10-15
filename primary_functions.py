@@ -67,6 +67,8 @@ def init_wordle(driver):
 
 def attempt_word(driver, word):
     # send word keys and enter to the game page
+    print("Attempting word {}...".format(word))
+    time.sleep(0.25)
     app_container_element = driver.find_element(By.XPATH, 
                         "/html")
     app_container_element.send_keys(word)
@@ -77,13 +79,14 @@ def attempt_word(driver, word):
     if element_exists(driver, 
                       "//div[@class='Toast-module_toast__iiVsN' and contains(text(),'word list')]",
                        2):
+        print('Word not accepted, trying another one...')
         return False
     return True
 
 
 def erase_attempt(driver):
     # send backscape 5 times
-    for i in range(5):
+    for _ in range(5):
         ActionChains(driver).send_keys(Keys.BACK_SPACE).perform()
 
     
